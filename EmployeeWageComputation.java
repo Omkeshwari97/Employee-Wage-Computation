@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class EmployeeWageComputation
+public class EmployeeWageComputation implements EmpWageInterface
 {
 	public static final int IS_FULL_TIME=1;
     public static final int IS_PART_TIME=2;
