@@ -5,25 +5,27 @@ public class EmployeeWageComputation implements EmpWageInterface
 	public static final int IS_FULL_TIME=1;
     public static final int IS_PART_TIME=2;
     public int n=0;
-    public CompanyEmpWage carray[];
+    public ArrayList<CompanyEmpWage> companyList;
 
     public EmployeeWageComputation()
     {
-        carray=new CompanyEmpWage[5];
+        companyList=new ArrayList<>();
     }
 
     public void addCompanyEmpWage(String COMPANY_NAME, int EMP_RATE_PER_HOUR, int NUM_OF_WORKING_DAYS, int MAX_WORK_HOURS)
     {
-        carray[n]=new CompanyEmpWage(COMPANY_NAME,EMP_RATE_PER_HOUR,NUM_OF_WORKING_DAYS,MAX_WORK_HOURS);
+        CompanyEmpWage cobj=new CompanyEmpWage(COMPANY_NAME,EMP_RATE_PER_HOUR,NUM_OF_WORKING_DAYS,MAX_WORK_HOURS);
+        companyList.add(cobj);
         n++;
     }
 
     public void callCompute()
     {
-        for(int i=0;i<n;i++)
+        for(int i=0;i<companyList.size();i++)
         {
-            carray[i].setTotalWage(computeWage(carray[i]));
-            System.out.println(carray[i]);
+            CompanyEmpWage c=companyList.get(i);
+            c.setTotalWage(computeWage(c));
+            System.out.println(c);
         }
     }
 
