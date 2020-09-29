@@ -6,6 +6,7 @@ public class EmployeeWageComputation implements EmpWageInterface
     public static final int IS_PART_TIME=2;
     public int n=0;
     public ArrayList<CompanyEmpWage> companyList;
+    public HashMap<Integer,Integer> dailyWageMap;
 
     public EmployeeWageComputation()
     {
@@ -15,6 +16,7 @@ public class EmployeeWageComputation implements EmpWageInterface
     public void addCompanyEmpWage(String COMPANY_NAME, int EMP_RATE_PER_HOUR, int NUM_OF_WORKING_DAYS, int MAX_WORK_HOURS)
     {
         CompanyEmpWage cobj=new CompanyEmpWage(COMPANY_NAME,EMP_RATE_PER_HOUR,NUM_OF_WORKING_DAYS,MAX_WORK_HOURS);
+        dailyWageMap=new HashMap<Integer,Integer>();
         companyList.add(cobj);
         n++;
     }
@@ -49,12 +51,18 @@ public class EmployeeWageComputation implements EmpWageInterface
             }
 
             empWage=empHrs*carray.EMP_RATE_PER_HOUR;
-            System.out.println("Daily Employee Wage: "+empWage);
+            dailyWageMap.put(days,empWage);
+            //System.out.println("Daily Employee Wage: "+empWage);
             
             totalWage=totalWage+empWage;
 
             hours=hours+empHrs;
             days++;
+        }
+
+        for(HashMap.Entry m:dailyWageMap.entrySet())
+        {
+            System.out.println("Day "+m.getKey()+" wage: "+m.getValue());
         }
 
         System.out.println("Total Working Hours of "+carray.COMPANY_NAME+" : "+hours);
