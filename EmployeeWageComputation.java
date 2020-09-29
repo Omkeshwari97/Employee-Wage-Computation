@@ -7,17 +7,20 @@ public class EmployeeWageComputation implements EmpWageInterface
     public int n=0;
     public ArrayList<CompanyEmpWage> companyList;
     public HashMap<Integer,Integer> dailyWageMap;
+    public HashMap<String,CompanyEmpWage> companyToEmpWageMap;
 
     public EmployeeWageComputation()
     {
         companyList=new ArrayList<>();
+        companyToEmpWageMap=new HashMap<>();
     }
 
     public void addCompanyEmpWage(String COMPANY_NAME, int EMP_RATE_PER_HOUR, int NUM_OF_WORKING_DAYS, int MAX_WORK_HOURS)
     {
         CompanyEmpWage cobj=new CompanyEmpWage(COMPANY_NAME,EMP_RATE_PER_HOUR,NUM_OF_WORKING_DAYS,MAX_WORK_HOURS);
-        dailyWageMap=new HashMap<Integer,Integer>();
+        dailyWageMap=new HashMap<>();
         companyList.add(cobj);
+        companyToEmpWageMap.put(COMPANY_NAME,cobj);
         n++;
     }
 
@@ -27,7 +30,7 @@ public class EmployeeWageComputation implements EmpWageInterface
         {
             CompanyEmpWage c=companyList.get(i);
             c.setTotalWage(computeWage(c));
-            System.out.println(c);
+            //System.out.println(c);
         }
     }
 
@@ -70,6 +73,24 @@ public class EmployeeWageComputation implements EmpWageInterface
 
         return totalWage;
     }
+
+    public int totalWage(String cname)
+    {
+        int total=0;
+
+        for(HashMap.Entry obj:companyToEmpWageMap.entrySet())
+        {
+            //System.out.println(obj.getKey().equals(cname));
+            if(obj.getKey().equals(cname))
+            {
+                CompanyEmpWage comp=(CompanyEmpWage)obj.getValue();
+                total=comp.getTotalWage();        
+                //System.out.println(total);
+            }
+        }
+
+        return total;
+    }
     
     public static void main(String[] args)
     {
@@ -77,5 +98,8 @@ public class EmployeeWageComputation implements EmpWageInterface
         company.addCompanyEmpWage("Flipkart",500,25,200);
         company.addCompanyEmpWage("Amazon",600,20,250);
         company.callCompute();
+        System.out.println("Total Wage for Flipkart: "+company.totalWage("Flipkart"));
+        System.out.println("Total Wage for Amazon: "+company.totalWage("Amazon"));
+
     }
 }

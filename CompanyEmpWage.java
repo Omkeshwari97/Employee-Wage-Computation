@@ -20,9 +20,14 @@ public class CompanyEmpWage
         this.totalWage=totalWage;
     }
 
-    @Override
+    public int getTotalWage()
+    {
+        return totalWage;
+    }
+
+   /*@Override
     public String toString()
     {
         return ("Total Wage of "+COMPANY_NAME+" :"+totalWage);
-    }
+    }*/
 }
